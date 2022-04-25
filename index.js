@@ -40,7 +40,8 @@ app.post('/tweets', (req, res) => {
 });
 
 app.get('/tweets', (req, res) => {
-	res.send(tweets);
+	let newTweets = tweets.slice(-10);
+	res.send(newTweets.reverse());
 });
 
 app.listen(5000); // listen on port 5000
