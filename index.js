@@ -5,19 +5,9 @@ const app = express();
 app.use(express.json()); 
 app.use(cors()); // enable cors
 
-const tweets = [
-	{
-		username: "bobesponja",
-		avatar: "https://super.abril.com.br/wp-content/uploads/2020/09/04-09_gato_SITE.jpg?quality=70&strip=info",
-        tweet: "eu amo o hub"
-	}
-];
-const users = [
-	{
-		username: "bobesponja",
-		avatar: "https://super.abril.com.br/wp-content/uploads/2020/09/04-09_gato_SITE.jpg?quality=70&strip=info"
-	}
-];
+let tweets = [];
+let users = [];
+let userAvatar;
 
 app.post('/sign-up', (req, res) => {
 	const bory = req.body;
@@ -27,10 +17,11 @@ app.post('/sign-up', (req, res) => {
 		username: bory.username,
 		avatar: bory.avatar,
 	}
-	console.log("userData", userData);
+	userAvatar = userData.avatar;
 
 	users.push(userData);
 	res.send("OK");
+	console.log("users", users);
 });
 
 app.post('/tweets', (req, res) => {
@@ -39,11 +30,13 @@ app.post('/tweets', (req, res) => {
 
 	const tweetData = {
 		username: bory.username,
+		avatar: userAvatar,
 		tweet: bory.tweet
 	}
 
 	tweets.push(tweetData);
     res.send("OK");
+	console.log("tweets", tweets);
 });
 
 app.get('/tweets', (req, res) => {
